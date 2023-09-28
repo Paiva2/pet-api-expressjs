@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { makeCreatePetServices } from "../../factories/make-pet-services";
+import { makePetCreationServices } from "../../factories/make-pet-services";
 
-export default function create(req: Request, res: Response) {
+export default function petCreation(req: Request, res: Response) {
   if (!req.body) {
     return res.status(404).send({ message: "Invalid body." });
   }
 
   const { age, color, name, orgName } = req.body;
 
-  const petServices = makeCreatePetServices();
+  const petServices = makePetCreationServices();
 
   petServices.execute({
     age,

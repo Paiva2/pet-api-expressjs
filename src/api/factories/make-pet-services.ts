@@ -1,9 +1,9 @@
 import PrismaPetRepository from "../repositories/prisma/prisma-pet-repository";
-import PetServices from "../services/pet/pet.services";
+import PetCreationServices from "../services/pet/pet-creation.services";
 
-export function makeCreatePetServices() {
+export function makePetCreationServices() {
   const prismaPetRepository = new PrismaPetRepository();
-  const createPetServices = new PetServices(prismaPetRepository);
+  const petCreationServices = new PetCreationServices(prismaPetRepository);
 
-  return createPetServices;
+  return petCreationServices;
 }
