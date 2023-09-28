@@ -1,10 +1,12 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express } from "express";
 import "dotenv/config";
+import petRoutes from "./api/routes/pets";
+import bodyParser from "body-parser";
 
 const app: Express = express();
 
-app.get("/test", (req: Request, res: Response) => {
-  res.send("Hello world!");
-});
+app.use(bodyParser.json());
+
+petRoutes(app);
 
 export default app;
