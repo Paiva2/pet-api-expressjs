@@ -4,16 +4,16 @@ import PetCreationServices from "../pet/pet-creation.services";
 import { PetRepository } from "../../repositories/pet-repositories";
 
 let petServicesMemory: PetRepository;
-let petServices: PetCreationServices;
+let petCreationServices: PetCreationServices;
 
 describe("Pet creation services", () => {
   beforeEach(() => {
     petServicesMemory = new PetServicesMemory();
-    petServices = new PetCreationServices(petServicesMemory);
+    petCreationServices = new PetCreationServices(petServicesMemory);
   });
 
   it("should be possible to create a new pet", async () => {
-    const { pet } = await petServices.execute({
+    const { pet } = await petCreationServices.execute({
       age: "5",
       color: "brown",
       name: "funny catss",
