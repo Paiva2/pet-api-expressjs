@@ -17,7 +17,7 @@ describe("Org register services", () => {
 
     const { org } = await orgCreationServices.execute({
       name: "org-1",
-      address: "Rua dos Ralideos;239;Jd.Shangrilá;São Paulo;SP;02990-100",
+      address: "Rua test;239;Jd.Test;São Paulo;SP;01111-100",
       contact_number: "(11) 93224-6808",
       password: hashed_password,
     });
@@ -35,7 +35,7 @@ describe("Org register services", () => {
 
     await orgCreationServices.execute({
       name: "org-1",
-      address: "Rua dos Ralideos;239;Jd.Shangrilá;São Paulo;SP;02990-100",
+      address: "Rua test;239;Jd.Test;São Paulo;SP;01111-100",
       contact_number: "(11) 93224-6808",
       password: hashed_password,
     });
@@ -43,7 +43,7 @@ describe("Org register services", () => {
     await expect(() => {
       return orgCreationServices.execute({
         name: "org-1",
-        address: "Rua dos Ralideos;239;Jd.Shangrilá;São Paulo;SP;02990-100",
+        address: "Rua test;239;Jd.Test;São Paulo;SP;01111-100",
         contact_number: "(11) 93224-6808",
         password: hashed_password,
       });
@@ -59,7 +59,7 @@ describe("Org register services", () => {
         password: "",
       });
     }).rejects.toThrowError(
-      "You must provide all Org informations to create a new one. Send the Org name, address a contact number and a password."
+      "You must provide all Org informations to create a new one. Send the Org name, address, a contact number and a password."
     );
   });
 });

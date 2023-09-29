@@ -1,6 +1,6 @@
 import { Org } from "@prisma/client";
 import OrgServicesMemory from "../../in-memory/org-services-memory";
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 
 interface OrgRegisterServicesRequest {
   name: string;
@@ -24,7 +24,7 @@ export default class OrgRegisterServices {
   }: OrgRegisterServicesRequest): Promise<OrgRegisterServicesResponse> {
     if (!name || !address || !contact_number || !password) {
       throw new Error(
-        "You must provide all Org informations to create a new one. Send the Org name, address a contact number and a password."
+        "You must provide all Org informations to create a new one. Send the Org name, address, a contact number and a password."
       );
     }
 
