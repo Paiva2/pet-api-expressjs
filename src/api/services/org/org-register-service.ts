@@ -1,27 +1,30 @@
 import { Org } from "@prisma/client";
 import OrgServicesMemory from "../../in-memory/org-services-memory";
+import { hash } from "bcrypt";
 
-interface OrgCreationServicesRequest {
+interface OrgRegisterServicesRequest {
   name: string;
   address: string;
   contact_number: string;
+  password: string;
 }
 
-interface OrgCreationServicesResponse {
+interface OrgRegisterServicesResponse {
   org: Org;
 }
 
-export default class OrgCreationServices {
+export default class OrgRegisterServices {
   constructor(private orgRepository: OrgServicesMemory) {}
 
   async execute({
     name,
     address,
     contact_number,
-  }: OrgCreationServicesRequest): Promise<OrgCreationServicesResponse> {
-    if (!name || !address || !contact_number) {
+    password,
+  }: OrgRegisterServicesRequest): Promise<OrgRegisterServicesResponse> {
+    if (!name || !address || !contact_number || !password) {
       throw new Error(
-        "You must provide all Org informations to create a new one. Send the Org name, address and a contact number."
+        "You must provide all Org informations to create a new one. Send the Org name, address a contact number and a password."
       );
     }
 
@@ -31,10 +34,13 @@ export default class OrgCreationServices {
       throw new Error("An Org with this name is already registered.");
     }
 
+    const hashed_password = await hash(password, 6);
+
     const org = await this.orgRepository.create({
       name,
       address,
       contact_number,
+      password: hashed_password,
     });
 
     return { org };

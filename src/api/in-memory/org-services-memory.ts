@@ -17,6 +17,7 @@ export default class OrgServicesMemory implements OrgRepository {
     const newOrg = {
       id: randomUUID(),
       name: data.name,
+      password: data.password!,
       address: data.address,
       contact_number: data.contact_number,
       createdAt: new Date(),

@@ -10,6 +10,7 @@ datasource db {
 model Org {
   id             String   @id @default(uuid())
   name           String   @unique
+  password       String?
   address        String
   contact_number String
   pets           Pet[]
