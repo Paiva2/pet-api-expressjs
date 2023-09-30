@@ -5,6 +5,16 @@ import { OrgRepository } from "../repositories/org-repositories";
 export default class OrgServicesMemory implements OrgRepository {
   private orgs: Org[] = [];
 
+  async findOrgById(orgName: string, orgId: string) {
+    const searchedOrgById = this.orgs.find(
+      (org) => org.id === orgId && org.name === orgName
+    );
+
+    if (!searchedOrgById) return null;
+
+    return searchedOrgById;
+  }
+
   async findUnique(orgName: string) {
     const searchedOrg = this.orgs.find((org) => org.name === orgName);
 

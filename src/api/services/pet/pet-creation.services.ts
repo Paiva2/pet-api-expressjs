@@ -1,5 +1,4 @@
 import { Pet } from "@prisma/client";
-import PrismaPetRepository from "../../repositories/prisma/prisma-pet-repository";
 import PetServicesMemory from "../../in-memory/pet-services-memory";
 import { OrgRepository } from "../../repositories/org-repositories";
 
@@ -8,6 +7,7 @@ interface PetCreationServicesRequest {
   color: string;
   age: string;
   orgName: string;
+  orgId: string;
 }
 
 interface PetCreationServicesResponse {
@@ -16,7 +16,7 @@ interface PetCreationServicesResponse {
 
 export default class PetCreationServices {
   constructor(
-    private petRepository: PrismaPetRepository | PetServicesMemory,
+    private petRepository: PetServicesMemory,
     private orgRepository: OrgRepository
   ) {}
 
@@ -25,15 +25,21 @@ export default class PetCreationServices {
     color,
     name,
     orgName,
+    orgId,
   }: PetCreationServicesRequest): Promise<PetCreationServicesResponse> {
-    //TODO
-    /*     const findOrg = this.orgRepository.findUnique(orgName);
-     */
-    /*     if (!findOrg) {
+    const findOrg = await this.orgRepository.findOrgById(orgName, orgId);
+
+    if (!findOrg) {
       throw new Error(
         "Org not found. You must provide an valid Org name before register a new cat."
       );
-    } */
+    }
+
+    if (!age || !color || !name) {
+      throw new Error(
+        "You must provide all Pet informations. Provide a valid name, age and color."
+      );
+    }
 
     const pet = await this.petRepository.create({
       age,
