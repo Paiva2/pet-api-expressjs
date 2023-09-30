@@ -4,7 +4,10 @@ import { hash } from "bcryptjs";
 
 interface OrgRegisterServicesRequest {
   name: string;
-  address: string;
+  address: {
+    city: string;
+    state: string;
+  };
   contact_number: string;
   password: string;
 }
@@ -22,11 +25,22 @@ export default class OrgRegisterServices {
     contact_number,
     password,
   }: OrgRegisterServicesRequest): Promise<OrgRegisterServicesResponse> {
-    if (!name || !address || !contact_number || !password) {
+    if (
+      !name ||
+      !address.city ||
+      !address.state ||
+      !contact_number ||
+      !password
+    ) {
       throw new Error(
         "You must provide all Org informations to create a new one. Send the Org name, address, a contact number and a password."
       );
     }
+
+    const orgAddress = {
+      city: address.city,
+      state: address.state,
+    };
 
     const orgAlreadyExists = await this.orgRepository.findUnique(name);
 
@@ -38,7 +52,7 @@ export default class OrgRegisterServices {
 
     const org = await this.orgRepository.create({
       name,
-      address,
+      address: `${orgAddress.city};${orgAddress.state}`,
       contact_number,
       password: hashed_password,
     });

@@ -26,8 +26,10 @@ describe("Pet creation services", () => {
 
     const { org } = await orgRegisterServices.execute({
       name: "org-1",
-      address:
-        "Street Test;266;Test Neighbourhood;Test City; Test State;Test Zipcode",
+      address: {
+        city: "São Paulo",
+        state: "SP",
+      },
       contact_number: "11932288970",
       password: "123456",
     });

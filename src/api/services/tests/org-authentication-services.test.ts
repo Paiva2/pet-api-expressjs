@@ -17,7 +17,10 @@ describe("Org authentication services", () => {
 
     await orgCreationServices.execute({
       name: "org-1",
-      address: "Rua test;239;Jd.Test;São Paulo;SP;01111-100",
+      address: {
+        city: "São Paulo",
+        state: "SP",
+      },
       contact_number: "(11) 9999-9999",
       password: "123456",
     });
