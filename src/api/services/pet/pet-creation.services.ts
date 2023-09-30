@@ -45,7 +45,7 @@ export default class PetCreationServices {
       age,
       color,
       name,
-      orgName,
+      orgName: findOrg.name,
     });
 
     return { pet };

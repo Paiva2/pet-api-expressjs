@@ -5,6 +5,18 @@ import { OrgRepository } from "../repositories/org-repositories";
 export default class OrgServicesMemory implements OrgRepository {
   private orgs: Org[] = [];
 
+  async findOrgByCity(orgCity: string, orgState: string) {
+    const searchedOrgByCity = this.orgs.find((org) => {
+      const [city, state] = org.address.split(";");
+
+      return city === orgCity && state === orgState;
+    });
+
+    if (!searchedOrgByCity) return null;
+
+    return searchedOrgByCity;
+  }
+
   async findOrgById(orgName: string, orgId: string) {
     const searchedOrgById = this.orgs.find(
       (org) => org.id === orgId && org.name === orgName
