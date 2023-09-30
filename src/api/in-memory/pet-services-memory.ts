@@ -5,6 +5,18 @@ import { randomUUID } from "crypto";
 export default class PetServicesMemory implements PetRepository {
   private pets: Pet[] = [];
 
+  async findPetByOrgName(orgName: string, petName: string) {
+    const petOnOrg = this.pets.find((pet) => {
+      return pet.name === petName && pet.orgName === orgName;
+    });
+
+    if (!petOnOrg) {
+      return null;
+    }
+
+    return petOnOrg;
+  }
+
   async findPetByOrgCity(orgName: string, page = 1) {
     const petsForAdoptionInThisOrg = this.pets
       .filter((pet) => {
