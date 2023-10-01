@@ -1,6 +1,6 @@
-import { Express } from "express";
-import petCreation from "../../controllers/pet/petCreation";
+import { Express } from "express"
+import petCreation from "../../controllers/pet/petCreation.controller"
 
 export default function petRoutes(app: Express) {
-  app.post("/pet", petCreation);
+  app.post("/pet", petCreation)
 }

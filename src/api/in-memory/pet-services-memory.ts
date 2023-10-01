@@ -1,61 +1,60 @@
-import { Pet, Prisma } from "@prisma/client";
-import { PetRepository } from "../repositories/pet-repositories";
-import { randomUUID } from "crypto";
+import { Pet, Prisma } from "@prisma/client"
+import { PetRepository } from "../repositories/pet-repositories"
+import { randomUUID } from "crypto"
 
 export default class PetServicesMemory implements PetRepository {
-  private pets: Pet[] = [];
+  private pets: Pet[] = []
 
   async findPetByParameters(petData: {
-    color?: string;
-    age?: string;
-    name?: string;
+    color?: string
+    age?: string
+    name?: string
   }) {
-    const queryArgs = Object.keys(petData);
-    const queryValues = Object.values(petData);
+    const queryArgs = Object.keys(petData)
+    const queryValues = Object.values(petData)
 
-    let filterByQuery: Pet[] | undefined = [];
-    let filterCheckpoint: Pet[] | undefined = [];
-    let filteredItems: Pet[] | undefined = [];
+    let filterByQuery: Pet[] | undefined = []
+    let filterCheckpoint: Pet[] | undefined = []
 
     for (let query of queryArgs) {
       filterCheckpoint = this.pets.filter((pet) => {
-        return queryValues.includes(pet[query as keyof typeof pet].toString());
-      });
+        return queryValues.includes(pet[query as keyof typeof pet].toString())
+      })
 
-      filterByQuery = filterByQuery?.concat(filterCheckpoint);
+      filterByQuery = filterByQuery?.concat(filterCheckpoint)
     }
 
     if (!filterByQuery?.length) {
-      return [];
+      return []
     }
 
-    return filterByQuery;
+    return filterByQuery
   }
 
   async findPetByOrgName(orgName: string, petName: string) {
     const petOnOrg = this.pets.find((pet) => {
-      return pet.name === petName && pet.orgName === orgName;
-    });
+      return pet.name === petName && pet.orgName === orgName
+    })
 
     if (!petOnOrg) {
-      return null;
+      return null
     }
 
-    return petOnOrg;
+    return petOnOrg
   }
 
   async findPetByOrgCity(orgName: string, page = 1) {
     const petsForAdoptionInThisOrg = this.pets
       .filter((pet) => {
-        return pet.orgName === orgName;
+        return pet.orgName === orgName
       })
-      .slice((page - 1) * 10, page * 10);
+      .slice((page - 1) * 10, page * 10)
 
     if (!petsForAdoptionInThisOrg.length) {
-      return [];
+      return []
     }
 
-    return petsForAdoptionInThisOrg;
+    return petsForAdoptionInThisOrg
   }
 
   async create(data: Prisma.PetUncheckedCreateInput) {
@@ -66,10 +65,10 @@ export default class PetServicesMemory implements PetRepository {
       name: data.name,
       orgName: data.orgName,
       createdAt: new Date(),
-    };
+    }
 
-    this.pets.push(newPet);
+    this.pets.push(newPet)
 
-    return newPet;
+    return newPet
   }
 }

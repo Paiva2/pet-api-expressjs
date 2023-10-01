@@ -1,23 +1,23 @@
-import PetServicesMemory from "../../in-memory/pet-services-memory";
-import OrgServicesMemory from "../../in-memory/org-services-memory";
+import { PetRepository } from "../../repositories/pet-repositories"
+import { OrgRepository } from "../../repositories/org-repositories"
 
 interface PetListForAdoptionInACityServicesRequest {
-  orgName: string;
-  petName: string;
+  orgName: string
+  petName: string
 }
 
 interface PetAdoptionContactServicesResponse {
   orgInformations: {
-    orgName: string;
-    orgAddress: string;
-    orgContact: string;
-  };
+    orgName: string
+    orgAddress: string
+    orgContact: string
+  }
 }
 
 export default class PetAdoptionContactServices {
   constructor(
-    private petRepository: PetServicesMemory,
-    private orgRepository: OrgServicesMemory
+    private petRepository: PetRepository,
+    private orgRepository: OrgRepository
   ) {}
 
   async execute({
@@ -27,19 +27,19 @@ export default class PetAdoptionContactServices {
     if (!orgName || !petName) {
       throw new Error(
         "You must provide all informations. Provide a valid org name a pet name."
-      );
+      )
     }
 
-    const pet = await this.petRepository.findPetByOrgName(orgName, petName);
+    const pet = await this.petRepository.findPetByOrgName(orgName, petName)
 
     if (!pet) {
-      throw new Error("There's no pet's with this name in the provided Org.");
+      throw new Error("There's no pet's with this name in the provided Org.")
     }
 
-    const findOrg = await this.orgRepository.findUnique(pet.orgName);
+    const findOrg = await this.orgRepository.findUnique(pet.orgName)
 
     if (!findOrg) {
-      throw new Error("Org not found.");
+      throw new Error("Org not found.")
     }
 
     return {
@@ -48,6 +48,6 @@ export default class PetAdoptionContactServices {
         orgAddress: findOrg?.address,
         orgContact: findOrg?.contact_number,
       },
-    };
+    }
   }
 }

@@ -1,6 +1,8 @@
-import app from "./app";
-import envVariables from "./env/envVariables";
+import app from "./app"
+import envVariables from "./env/envVariables"
 
-app.listen(envVariables.PORT, () => {
-  console.log(`⚡️ Server running at http://localhost:3000`);
-});
+const server = app.listen(envVariables.PORT, () => {
+  console.log(`⚡️ Server running at ${envVariables.PORT}`)
+})
+
+export default server
