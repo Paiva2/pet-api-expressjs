@@ -4,7 +4,7 @@ import { ZodError, z } from "zod"
 
 export default async function orgRegister(req: Request, res: Response) {
   const orgRegisterSchema = z.object({
-    name: z.string().min(1, { message: "Org name invalid." }),
+    orgName: z.string().min(1, { message: "Org name invalid." }),
     password: z
       .string()
       .min(6, { message: "Password must have at least 6 characters." }),
@@ -22,15 +22,15 @@ export default async function orgRegister(req: Request, res: Response) {
   try {
     orgRegisterSchema.parse(req.body)
 
-    const { address, contact_number, name, password } = req.body
+    const { address, contact_number, orgName, password } = req.body
 
     const orgServices = makeOrgRegisterServices()
 
     await orgServices.execute({
+      name: orgName,
+      password,
       address,
       contact_number,
-      name,
-      password,
     })
 
     return res.status(201).send()

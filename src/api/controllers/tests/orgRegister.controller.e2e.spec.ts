@@ -1,10 +1,10 @@
-import { afterAll, describe, expect, it } from "vitest"
+import { afterEach, describe, expect, it } from "vitest"
 import request from "supertest"
-import app from "../../../app"
 import server from "../../../server"
+import app from "../../../app"
 
 describe("Org register controller", () => {
-  afterAll(() => {
+  afterEach(() => {
     server.close()
   })
 
@@ -12,7 +12,7 @@ describe("Org register controller", () => {
     const org = await request(app)
       .post("/register-org")
       .send({
-        name: "org-1",
+        orgName: "org-1",
         password: "123456",
         contact_number: "11932246808",
         address: {
@@ -30,7 +30,7 @@ describe("Org register controller", () => {
     const res = await request(app)
       .post("/register-org")
       .send({
-        name: "",
+        orgName: "",
         password: "123456",
         contact_number: "",
         address: {
