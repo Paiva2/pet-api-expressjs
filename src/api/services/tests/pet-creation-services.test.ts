@@ -66,7 +66,7 @@ describe("Pet creation services", () => {
         age: "5",
       })
     }).rejects.toThrowError(
-      "Org not found. You must provide an valid Org name before register a new cat."
+      "Org not found. You must provide an valid Org name before register a new pet."
     )
   })
 

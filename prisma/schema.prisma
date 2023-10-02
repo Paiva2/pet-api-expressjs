@@ -25,5 +25,5 @@ model Pet {
   orgName   String
   createdAt DateTime @default(now())
 
-  org Org? @relation(fields: [orgName], references: [name])
+  org Org? @relation(fields: [orgName], references: [name], onDelete: Cascade)
 }

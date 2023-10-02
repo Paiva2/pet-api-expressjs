@@ -31,7 +31,7 @@ export default class PetCreationServices {
 
     if (!findOrg) {
       throw new Error(
-        "Org not found. You must provide an valid Org name before register a new cat."
+        "Org not found. You must provide an valid Org name before register a new pet."
       )
     }
 
@@ -45,7 +45,7 @@ export default class PetCreationServices {
       age,
       color,
       name,
-      orgName: findOrg.name,
+      orgName,
     })
 
     return { pet }

@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from "vitest"
+import { afterAll, beforeEach, describe, expect, it } from "vitest"
 import request from "supertest"
 import app from "../../../app"
 import server from "../../../server"
@@ -20,7 +20,7 @@ describe("Org authentication controller", () => {
       })
   })
 
-  afterEach(() => {
+  afterAll(() => {
     server.close()
   })
 

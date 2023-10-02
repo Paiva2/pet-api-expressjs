@@ -22,10 +22,7 @@ export default async function orgAuthentication(req: Request, res: Response) {
       password,
     })
 
-    return res
-      .status(200)
-      .setHeader("Authorization", "Bearer " + userToken.token)
-      .send(userToken)
+    return res.status(200).cookie("orgToken", userToken).send(userToken)
   } catch (e) {
     if (e instanceof ZodError) {
       return res.status(422).send({

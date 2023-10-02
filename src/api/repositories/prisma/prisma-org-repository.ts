@@ -16,7 +16,14 @@ export default class PrismaOrgRepository implements OrgRepository {
   }
 
   async findOrgById(orgName: string, orgId: string) {
-    return null
+    const org = await prisma.org.findUnique({
+      where: {
+        id: orgId,
+        name: orgName,
+      },
+    })
+
+    return org
   }
 
   async findUnique(orgName: string) {

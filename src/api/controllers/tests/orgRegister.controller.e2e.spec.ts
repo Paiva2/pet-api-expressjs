@@ -1,10 +1,10 @@
-import { afterEach, describe, expect, it } from "vitest"
+import { afterAll, describe, expect, it } from "vitest"
 import request from "supertest"
 import server from "../../../server"
 import app from "../../../app"
 
 describe("Org register controller", () => {
-  afterEach(() => {
+  afterAll(() => {
     server.close()
   })
 

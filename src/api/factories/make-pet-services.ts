@@ -1,9 +1,15 @@
-import PrismaPetRepository from "../repositories/prisma/prisma-pet-repository";
-import PetCreationServices from "../services/pet/pet-creation.services";
+import PrismaOrgRepository from "../repositories/prisma/prisma-org-repository"
+import PrismaPetRepository from "../repositories/prisma/prisma-pet-repository"
+import PetCreationServices from "../services/pet/pet-creation.services"
 
 export function makePetCreationServices() {
-  const prismaPetRepository = new PrismaPetRepository();
-  const petCreationServices = new PetCreationServices(prismaPetRepository);
+  const prismaPetRepository = new PrismaPetRepository()
+  const prismaOrgRepository = new PrismaOrgRepository()
 
-  return petCreationServices;
+  const petCreationServices = new PetCreationServices(
+    prismaPetRepository,
+    prismaOrgRepository
+  )
+
+  return petCreationServices
 }

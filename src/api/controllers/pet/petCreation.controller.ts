@@ -1,21 +1,60 @@
 import { Request, Response } from "express"
 import { makePetCreationServices } from "../../factories/make-pet-services"
+import { ZodError, z } from "zod"
+import jwt from "jsonwebtoken"
+import envVariables from "../../../env/envVariables"
 
-export default function petCreation(req: Request, res: Response) {
-  if (!req.body) {
-    return res.status(404).send({ message: "Invalid body." })
+interface OrgJwtSchema {
+  data: {
+    id: string
+    name: string
+  }
+  iat: number
+  exp: number
+}
+
+export default async function petCreation(req: Request, res: Response) {
+  const orgRegisterSchema = z.object({
+    age: z.string().min(1, { message: "Pet age invalid." }),
+    petName: z.string().min(1, { message: "Pet name invalid." }),
+    color: z.string().min(1, { message: "Pet Color invalid." }),
+  })
+
+  const orgJwt = req.cookies.orgToken
+
+  try {
+    jwt.verify(orgJwt.token, envVariables.JWT_SECRET as string)
+  } catch {
+    return res.status(401).send({ message: "Invalid token." })
   }
 
-  /*   const { age, color, name, orgName } = req.body
+  try {
+    orgRegisterSchema.parse(req.body)
 
-  const petServices = makePetCreationServices()
+    const { age, color, petName } = req.body
 
-  petServices.execute({
-    age,
-    color,
-    name,
-    orgName,
-  })
- */
-  return res.status(200).send()
+    const orgInformations = jwt.decode(orgJwt.token) as OrgJwtSchema
+
+    const petServices = makePetCreationServices()
+
+    await petServices.execute({
+      orgId: orgInformations?.data?.id,
+      orgName: orgInformations?.data?.name,
+      age,
+      color,
+      name: petName,
+    })
+
+    return res.status(201).send()
+  } catch (e) {
+    if (e instanceof ZodError) {
+      return res.status(422).send({
+        message: e.issues.map((error) => error.message),
+      })
+    }
+
+    if (e instanceof Error) {
+      return res.status(404).send({ message: e.message })
+    }
+  }
 }
