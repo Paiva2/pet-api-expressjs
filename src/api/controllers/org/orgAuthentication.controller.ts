@@ -15,9 +15,9 @@ export default async function orgAuthentication(req: Request, res: Response) {
 
     const { orgName, password } = req.body
 
-    const orgServices = makeOrgAuthenticationServices()
+    const orgAuthenticationServices = makeOrgAuthenticationServices()
 
-    const userToken = await orgServices.execute({
+    const userToken = await orgAuthenticationServices.execute({
       orgName,
       password,
     })

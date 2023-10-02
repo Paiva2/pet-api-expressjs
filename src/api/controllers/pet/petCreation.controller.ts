@@ -35,9 +35,9 @@ export default async function petCreation(req: Request, res: Response) {
 
     const orgInformations = jwt.decode(orgJwt.token) as OrgJwtSchema
 
-    const petServices = makePetCreationServices()
+    const petCreationServices = makePetCreationServices()
 
-    await petServices.execute({
+    await petCreationServices.execute({
       orgId: orgInformations?.data?.id,
       orgName: orgInformations?.data?.name,
       age,

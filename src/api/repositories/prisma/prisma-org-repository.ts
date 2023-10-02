@@ -12,7 +12,15 @@ export default class PrismaOrgRepository implements OrgRepository {
   }
 
   async findOrgByCity(city: string, state: string) {
-    return null
+    const orgByCity = await prisma.org.findFirst({
+      where: {
+        address: {
+          contains: city && state,
+        },
+      },
+    })
+
+    return orgByCity
   }
 
   async findOrgById(orgName: string, orgId: string) {

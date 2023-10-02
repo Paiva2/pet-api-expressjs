@@ -24,9 +24,9 @@ export default async function orgRegister(req: Request, res: Response) {
 
     const { address, contact_number, orgName, password } = req.body
 
-    const orgServices = makeOrgRegisterServices()
+    const orgRegisterServices = makeOrgRegisterServices()
 
-    await orgServices.execute({
+    await orgRegisterServices.execute({
       name: orgName,
       password,
       address,

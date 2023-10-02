@@ -9,8 +9,16 @@ export default class PrismaPetRepository implements PetRepository {
     return pet
   }
 
-  async findPetByOrgCity(orgName: string, page?: number | undefined) {
-    return null
+  async findPetByOrgCity(orgName: string, page = 1) {
+    const petByOrgCity = await prisma.pet.findMany({
+      where: {
+        orgName,
+      },
+      skip: (page - 1) * 10,
+      take: page * 10,
+    })
+
+    return petByOrgCity
   }
 
   async findPetByOrgName(orgName: string, petName: string) {
