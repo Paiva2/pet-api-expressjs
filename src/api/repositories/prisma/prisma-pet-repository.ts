@@ -14,7 +14,16 @@ export default class PrismaPetRepository implements PetRepository {
   }
 
   async findPetByOrgName(orgName: string, petName: string) {
-    return null
+    const petByOrgName = await prisma.pet.findFirst({
+      where: {
+        name: petName,
+        AND: {
+          orgName,
+        },
+      },
+    })
+
+    return petByOrgName
   }
 
   async findPetByParameters(petData: {

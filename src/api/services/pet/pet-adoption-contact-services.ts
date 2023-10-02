@@ -30,16 +30,16 @@ export default class PetAdoptionContactServices {
       )
     }
 
+    const findOrg = await this.orgRepository.findUnique(orgName)
+
+    if (!findOrg) {
+      throw new Error("Org not found.")
+    }
+
     const pet = await this.petRepository.findPetByOrgName(orgName, petName)
 
     if (!pet) {
       throw new Error("There's no pet's with this name in the provided Org.")
-    }
-
-    const findOrg = await this.orgRepository.findUnique(pet.orgName)
-
-    if (!findOrg) {
-      throw new Error("Org not found.")
     }
 
     return {

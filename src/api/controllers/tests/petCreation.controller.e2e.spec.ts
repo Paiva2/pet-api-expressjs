@@ -3,8 +3,8 @@ import request from "supertest"
 import server from "../../../server"
 import app from "../../../app"
 
-describe("Org register controller", () => {
-  let token: any
+describe("Pet register controller", () => {
+  let token: string
 
   beforeAll(async () => {
     await request(app)
