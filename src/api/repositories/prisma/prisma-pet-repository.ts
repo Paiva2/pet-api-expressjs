@@ -39,6 +39,16 @@ export default class PrismaPetRepository implements PetRepository {
     age?: string | undefined
     name?: string | undefined
   }) {
-    return []
+    const { color, age, name } = petData
+
+    const petFilter = await prisma.pet.findMany({
+      where: {
+        color,
+        age,
+        name,
+      },
+    })
+
+    return petFilter
   }
 }
