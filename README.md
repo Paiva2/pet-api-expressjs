@@ -6,6 +6,7 @@
 - [x] It must be possible to view details of a pet for adoption.
 - [x] It must be possible to register as an ORG.
 - [x] It must be possible to log in as an ORG.
+- [x] E2E and Unit Tests.
 
 ### Business Rules
 
